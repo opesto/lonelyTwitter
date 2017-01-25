@@ -16,6 +16,7 @@ public class NormalTweet extends Tweet {
     }
 
     public Boolean isImportant() {
+
         return  Boolean.FALSE;
     }
 }
