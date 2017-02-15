@@ -41,12 +41,18 @@ public class TweetList  {
         int index1 = 0;
         int index2 = 0;
         while (index1 < tweets.size()){
-            while (index2 < tweets.size()){
-                if (tweets.get(index1) == tweets.get(index2)){
+            while (index2 < tweets.size()) {
+                if (tweets.get(index1) == tweets.get(index2) && index1 != index2) {
                     return TRUE;
+                } else{
+                index2++;
                 }
+
             }
+            index1++;
+
         }
+
         return FALSE;
     }
 

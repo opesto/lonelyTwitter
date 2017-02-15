@@ -1,6 +1,7 @@
 package ca.ualberta.cs.lonelytwitter;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.List;
@@ -30,9 +31,13 @@ public class TweetListTest extends ActivityInstrumentationTestCase2 {
         TweetList tweets = new TweetList();
         Tweet tweet = new NormalTweet("test tweet1");
         tweets.addTweet(tweet);
-        Tweet tweet2 = new NormalTweet("test tweet1");
-        tweets.addTweet(tweet2);
-        assertEquals(tweets.getCount(), 1);
+
+        try {
+            tweets.addTweet(tweet);
+            assertEquals(tweets.getCount(), 1);
+        } catch (IllegalArgumentException e){
+            Log.i("Error", "tweet already added");
+        }
     }
 
 
@@ -64,8 +69,8 @@ public class TweetListTest extends ActivityInstrumentationTestCase2 {
         Tweet tweet3 = new NormalTweet("test3");
         tweet3.setDate(cal.getTime());
 
-        tweets.add(tweet);
         tweets.add(tweet2);
+        tweets.add(tweet);
         tweets.add(tweet3);
 
         List<Tweet> sortedTweets = tweets.getTweets();
@@ -92,11 +97,14 @@ public class TweetListTest extends ActivityInstrumentationTestCase2 {
     public void testHasTweet2(){
         TweetList tweets = new TweetList();
         Tweet tweet = new NormalTweet("test tweet");
+        Tweet tweet2 = new NormalTweet("test tweet2");
         tweets.add(tweet);
-        Tweet tweet2 = new NormalTweet("test tweet");
-        tweets.add(tweet2);
+        tweets.add(tweet);
         assertTrue(tweets.hasTweet2());
-        tweets.delete(tweet2);
+        tweets.delete(tweet);
+        tweets.delete(tweet);
+        tweets.add(tweet2);
+        tweets.add(tweet);
         assertFalse(tweets.hasTweet2());
     }
 
