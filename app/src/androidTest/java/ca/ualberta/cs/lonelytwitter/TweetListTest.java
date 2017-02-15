@@ -3,6 +3,7 @@ package ca.ualberta.cs.lonelytwitter;
 import android.test.ActivityInstrumentationTestCase2;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by opreston on 2/14/17.
@@ -47,8 +48,34 @@ public class TweetListTest extends ActivityInstrumentationTestCase2 {
         assertEquals(returnedTweet.getDate(), tweet.getDate());
     }
 
-    public void testGetTweets(){
+    public void testGetTweets() {
+        TweetList tweets = new TweetList();
+        Calendar cal = Calendar.getInstance();
 
+        cal.set(2016, 2, 5);
+        Tweet tweet = new NormalTweet("test1");
+        tweet.setDate(cal.getTime());
+
+        cal.set(2014,2,5);
+        Tweet tweet2 = new NormalTweet("test2");
+        tweet2.setDate(cal.getTime());
+
+        cal.set(2010,2,5);
+        Tweet tweet3 = new NormalTweet("test3");
+        tweet3.setDate(cal.getTime());
+
+        tweets.add(tweet);
+        tweets.add(tweet2);
+        tweets.add(tweet3);
+
+        List<Tweet> sortedTweets = tweets.getTweets();
+
+        for (int x = 0; x < sortedTweets.size() - 1 ; x++) {
+            Tweet first = sortedTweets.get(x);
+            Tweet second = sortedTweets.get(x+1);
+
+            assertTrue(first.getDate().compareTo(second.getDate()) < 0);
+        }
     }
 
     public void testGetCount(){
